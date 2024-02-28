@@ -1,39 +1,40 @@
 // Fetch Data.
-const getData = async (inputValue) => {
-  const main = document.getElementById("main");
-
+const getDataFromApi = async (inputValue) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${inputValue}`
   );
   const data = await res.json();
+  const status = data.status;
   const phones = data.data;
-  showData(phones);
+  showData(phones, status);
+};
 
+// Get SearchInput.
+const getSearchInput = () => {
+  const searchInputField = document.getElementById("searchInputField");
+  const inputValue = searchInputField.value;
   // Validation
-  if (data.status === false) {
-    main.innerHTML = `<div class="flex justify-center items-center min-h-[500px]">
-        <h1 class="text-6xl font-bold text-yellow-400">Data not found!</h1>
-      </div> `;
+  if (!inputValue) {
+    alert("Please input your phone name!");
+  } else {
+    getDataFromApi(inputValue);
   }
 };
 
 // ShowData.
-const showData = (phones) => {
+const showData = (phones, status) => {
   const phoneContainer = document.getElementById("phoneContainer");
+  const msgContainer = document.getElementById("msgContainer");
 
-  // Clear previous Data in phoneContainer.
-  phoneContainer.textContent = "";
-
-  // ShowAllBtn Toggle here.
-  const showAllBtn = document.getElementById("showAllBtn");
-  if (phones.length > 12) {
-    showAllBtn.classList.remove("hidden");
+  // Validation messege Data found or not.
+  if (!status) {
+    msgContainer.classList.remove("hidden");
   } else {
-    showAllBtn.classList.add("hidden");
+    msgContainer.classList.add("hidden");
   }
 
-  // Show only first 12 Items.
-  phones = phones.slice(0, 12);
+  // Clear PreviousPhones.
+  phoneContainer.innerText = "";
 
   phones.map((phone) => {
     const { phone_name, image } = phone;
@@ -55,17 +56,4 @@ const showData = (phones) => {
 
     phoneContainer.appendChild(childDiv);
   });
-};
-
-// Search button.
-const searchData = () => {
-  const searchInput = document.getElementById("searchInput");
-  const inputValue = searchInput.value;
-
-  // Validation.
-  if (!inputValue) {
-    alert("Please Search your phone!");
-  } else {
-    getData(inputValue);
-  }
 };

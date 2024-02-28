@@ -22,12 +22,12 @@
           </div>
           <div class="flex-none border border-red-500 rounded-lg bg-white">
             <input
-              id="searchInput"
+              id="searchInputField"
               type="text"
               placeholder="Search..."
               class="input w-24 md:w-auto"
             />
-            <button onclick="searchData()" class="btn btn-secondary">
+            <button onclick="getSearchInput()" class="btn btn-secondary">
               Search
             </button>
           </div>
@@ -37,6 +37,16 @@
 
     <!--Main-->
     <main id="main" class="container mx-auto">
+      <!--If Any data not exits-->
+      <div
+        id="msgContainer"
+        class="flex justify-center items-center min-h-[500px] hidden"
+      >
+        <h1 class="text-5xl text-yellow-400 font-blod flex items-center gap-6">
+          <span class="text-8xl text-yellow-950">404!</span> Data not found!
+        </h1>
+      </div>
+
       <section>
         <div
           id="phoneContainer"
@@ -64,7 +74,11 @@
     <!--Show allBtn-->
     <section>
       <div class="flex justify-center my-8">
-        <button id="showAllBtn" class="btn btn-secondary hidden px-8">
+        <button
+          onclick="clickShowAllBtn()"
+          id="showAllBtn"
+          class="btn btn-secondary hidden px-8"
+        >
           Show All
         </button>
       </div>
