@@ -14,10 +14,29 @@
   </head>
   <body>
     <!--Header-->
-    <header></header>
+    <header class="container mx-auto">
+      <nav>
+        <div class="navbar bg-base-200 mb-4">
+          <div class="flex-1">
+            <a class="btn btn-ghost text-xl">Buy-Phones</a>
+          </div>
+          <div class="flex-none border border-red-500 rounded-lg bg-white">
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Search..."
+              class="input w-24 md:w-auto"
+            />
+            <button onclick="searchData()" class="btn btn-secondary">
+              Search
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
 
     <!--Main-->
-    <main class="container mx-auto">
+    <main id="main" class="container mx-auto">
       <section>
         <div
           id="phoneContainer"
@@ -41,6 +60,15 @@
         </div>
       </section>
     </main>
+
+    <!--Show allBtn-->
+    <section>
+      <div class="flex justify-center my-8">
+        <button id="showAllBtn" class="btn btn-secondary hidden px-8">
+          Show All
+        </button>
+      </div>
+    </section>
 
     <!--Footer-->
     <footer></footer>
