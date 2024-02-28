@@ -18,6 +18,9 @@ const getSearchInput = (isShowAll) => {
     alert("Please input your phone name!");
   } else {
     getDataFromApi(inputValue, isShowAll);
+
+    // Show loading
+    loadingToggle("hidden");
   }
 };
 
@@ -69,9 +72,22 @@ const showData = (phones, status, isShowAll) => {
 
     phoneContainer.appendChild(childDiv);
   });
+
+  // Hideloading
+  loadingToggle("hidden");
 };
 
 // If Clicked showAllBtn.
 const clickShowAllBtn = () => {
   getSearchInput(true);
+};
+
+// Loading Toggle.
+const loadingToggle = (hidden) => {
+  const loading = document.getElementById("loading");
+  if (loading.classList.contains(hidden)) {
+    loading.classList.remove(hidden);
+  } else {
+    loading.classList.add(hidden);
+  }
 };
