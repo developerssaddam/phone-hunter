@@ -1,40 +1,53 @@
 // Fetch Data.
-const getDataFromApi = async (inputValue) => {
+const getDataFromApi = async (inputValue, isShowAll) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${inputValue}`
   );
   const data = await res.json();
   const status = data.status;
   const phones = data.data;
-  showData(phones, status);
+  showData(phones, status, isShowAll);
 };
 
 // Get SearchInput.
-const getSearchInput = () => {
+const getSearchInput = (isShowAll) => {
   const searchInputField = document.getElementById("searchInputField");
   const inputValue = searchInputField.value;
   // Validation
   if (!inputValue) {
     alert("Please input your phone name!");
   } else {
-    getDataFromApi(inputValue);
+    getDataFromApi(inputValue, isShowAll);
   }
 };
 
 // ShowData.
-const showData = (phones, status) => {
+const showData = (phones, status, isShowAll) => {
   const phoneContainer = document.getElementById("phoneContainer");
   const msgContainer = document.getElementById("msgContainer");
+  const showAllBtn = document.getElementById("showAllBtn");
 
-  // Validation messege Data found or not.
+  // Validation Data found or not.
   if (!status) {
     msgContainer.classList.remove("hidden");
   } else {
     msgContainer.classList.add("hidden");
   }
 
+  // ToggleShowAll Button.
+  if (phones.length > 12 && !isShowAll) {
+    showAllBtn.classList.remove("hidden");
+  } else {
+    showAllBtn.classList.add("hidden");
+  }
+
   // Clear PreviousPhones.
   phoneContainer.innerText = "";
+
+  // Validation all data show or not.
+  if (!isShowAll) {
+    phones = phones.slice(0, 12);
+  }
 
   phones.map((phone) => {
     const { phone_name, image } = phone;
@@ -56,4 +69,9 @@ const showData = (phones, status) => {
 
     phoneContainer.appendChild(childDiv);
   });
+};
+
+// If Clicked showAllBtn.
+const clickShowAllBtn = () => {
+  getSearchInput(true);
 };
